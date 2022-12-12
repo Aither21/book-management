@@ -1,4 +1,5 @@
 FROM php:8.1.11-fpm
+EXPOSE 5173
 
 # COPY php.ini
 COPY ./docker/php/php.ini /usr/local/etc/php/php.ini
