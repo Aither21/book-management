@@ -14,14 +14,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('personal_access_tokens', function (Blueprint $table) {
-            $table->id();
-            $table->morphs('tokenable');
-            $table->string('name');
-            $table->string('token', 64)->unique();
-            $table->text('abilities')->nullable();
-            $table->timestamp('last_used_at')->nullable();
-            $table->timestamp('expires_at')->nullable();
+        Schema::create('book_managements', function (Blueprint $table) {
+            $table->id()->comment('書籍管理ID');
+            $table->foreignId('user_id')->comment('ユーザーID')->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('book_id')->comment('書籍ID')->constrained('books')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->tinyInteger('status')->comment('書籍レンタルステータス');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
@@ -34,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('personal_access_tokens');
+        Schema::dropIfExists('book_managements');
     }
 };
