@@ -14,15 +14,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id()->comment('ユーザーID');
-            $table->string('name', 150)->comment('ユーザー名');
-            $table->string('email', 256)->unique()->comment('メールアドレス');
-            $table->timestamp('email_verified_at')->nullable()->comment('仮登録許可期限');
-            $table->string('password')->comment('パスワード');
-            $table->rememberToken()->comment('トークン');
+        Schema::create('books', function (Blueprint $table) {
+            $table->id()->comment('書籍ID');
+            $table->string('name', 150)->comment('書籍名');
+            $table->string('author', 100)->comment('著者名');
             $table->string('company', 10)->comment('会社名');
-            $table->boolean('is_admin')->default(false)->comment('管理者フラグ');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
@@ -35,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('books');
     }
 };
