@@ -32,6 +32,14 @@ services:
     volumes:
       - ./src/:/var/www/html
 
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - target: 8025
+        published: ${MAILHOG_PUBLISHED_PORT:-8025}
+        protocol: tcp
+        mode: host
+
   db:
     build:
       context: .
