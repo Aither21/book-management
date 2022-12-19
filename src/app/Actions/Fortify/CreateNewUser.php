@@ -32,11 +32,16 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
         ])->validate();
 
-        return User::create([
-            'name' => $input['name'],
-            'email' => $input['email'],
-            'company' => $input['company'],
-            'password' => Hash::make($input['password']),
-        ]);
+        if (!isset($input['company'])) {
+            $input['company'] = 'KITU'; // Komazawa IT Union
+        }
+
+        $user = new User();
+        $user->name = $input['name'];
+        $user->email = $input['email'];
+        $user->company = $input['company'];
+        $user->password = Hash::make($input['password']);
+        $user->save();
+        return $user;
     }
 }
