@@ -13,7 +13,7 @@ const App = () => {
             <Header screenName={'Header'}/>
           <div className="flex flex-col justify-center items-center">
             <Routes>
-                <Route path='/' element={ <Home explanation = {'※開発用に仮で作成しました'} linkPreUserRegisterForm = '仮会員登録画面へ' />} />
+                <Route path='/home' element={ <Home explanation = {'※開発用に仮で作成しました'} linkPreUserRegisterForm = '仮会員登録画面へ' />} />
                 <Route path='/pre_user/register' element={<PreUserRegisterForm />} />
                 <Route path='*' element={<NotFound />} />
             </Routes>
