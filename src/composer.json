@@ -27,7 +27,13 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "exclude-from-classmap": [
+            "vendor\\laravel\\fortify\\src\\Http\\Responses\\VerifyEmailResponse.php"
+        ],
+        "files":[
+            "app\\Http\\Responses\\VerifyEmailResponse.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
