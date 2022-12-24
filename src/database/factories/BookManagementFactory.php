@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Book;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,9 +19,9 @@ class BookManagementFactory extends Factory
     public function definition()
     {
         return [
-            'name' => fake()->name(),
-            'author' => fake()->text(30),
-            'company' => 'KITU' //Komazawa IT Union
+            'user_id' => User::factory(),
+            'book_id' => Book::factory(),
+            'status' => 1
         ];
     }
 }
