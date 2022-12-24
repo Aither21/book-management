@@ -11,13 +11,20 @@ class AuthenticationTest extends TestCase
 {
   use RefreshDatabase;
 
+  private User $user;
+
+  public function setUp(): void
+  {
+    parent::setUp();
+    $this->withoutMiddleware();
+    $this->user = User::factory()->create();
+  }
+
   /** @test ログインAPIテスト、正常系 */
   public function users_can_authenticate_using_the_login_screen()
   {
-    $user = User::factory()->create();
-
     $response = $this->post('/api/login', [
-      'email' => $user->email,
+      'email' => $this->user->email,
       'password' => 'password',
     ]);
 
@@ -30,11 +37,28 @@ class AuthenticationTest extends TestCase
   {
     $user = User::factory()->create();
 
-    $this->post('/api/login', [
-      'email' => $user->email,
+    $response = $this->post('/api/login', [
+      'email' => $this->user->email,
       'password' => 'wrong-password',
     ]);
 
     $this->assertGuest();
+  }
+
+  /**
+   * api/user（ユーザーの取得）のテスト
+   *
+   * @return void
+   */
+  public function testApiUser()
+  {
+    $user = User::factory()->create();
+
+    $response = $this->actingAs($this->user, 'sanctum')->get('/api/user');
+
+    $this->assertSame(
+      $user->toArray(),
+      $response->json()
+    );
   }
 }
