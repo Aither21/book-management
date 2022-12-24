@@ -28,11 +28,11 @@ class BookGetListTest extends TestCase
     }
 
     /**
-     * A basic feature test example.
+     * 図書一覧取得API、正常系
      *
      * @return void
      */
-    public function testBooks()
+    public function testGetBooks()
     {
         $response = $this->actingAs($this->user, 'sanctum')->get('/api/v1/book');
 

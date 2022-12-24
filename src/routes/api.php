@@ -18,5 +18,5 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function () {
   Route::get('/user', [UserController::class, 'index']);
   Route::get('/v1/book', [BookController::class, 'index']);
-
+  Route::get('/v1/book/{bookId}', [BookController::class, 'show']);
 });
