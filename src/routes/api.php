@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\BookController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\BookManagementController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +18,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
   Route::get('/user', [UserController::class, 'index']);
-  Route::get('/v1/book', [BookController::class, 'index']);
-  Route::get('/v1/book/{bookId}', [BookController::class, 'show']);
+  Route::controller(BookController::class)->group(function () {
+    Route::get('/v1/book', 'index');
+    Route::get('/v1/book/{bookId}', 'show');
+  });
+  Route::put('/v1/book-management/{bookId}', [BookManagementController::class, 'update']);
 });

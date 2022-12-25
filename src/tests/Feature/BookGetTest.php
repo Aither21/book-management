@@ -34,7 +34,7 @@ class BookGetTest extends TestCase
      *
      * @return void
      */
-    public function test GetBook()
+    public function testGetBook()
     {
         $response = $this->actingAs(
             $this->user,
