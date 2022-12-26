@@ -18,24 +18,26 @@ const LoginForm = (props) => {
 	}
 
     async function loginRequest(inputMail, inputPassword) {
-		await axios.post("/api/login", {
-			email: inputMail,
-			password: inputPassword,
-		})
-		.then((response) => {
-			const statusCode = response.status;
-			console.log(statusCode);
+		await axios.get('/sanctum/csrf-cookie').then(() => {
+			axios.post("/api/login", {
+				email: inputMail,
+				password: inputPassword,
+			})
+			.then((response) => {
+				const statusCode = response.status;
+				console.log(statusCode);
 			// if(statusCode === 201){
 			// 	document.location = "/login";
 			// 	return;
 			// }
-            if(statusCode === 200){
-                document.location = "/book/list";
-            }
-		})
-		.catch((error) => {
-			console.error(error);
-			return;
+				if(statusCode === 200){
+						document.location = "/book/list";
+				}
+			})
+			.catch((error) => {
+				console.error(error);
+				return;
+			})
 		})
 	}
 

@@ -30,23 +30,25 @@ const MailForm = (props) => {
 	}
 
 	async function registerRequest(inputName, inputMail, inputPassword, inputPasswordConfirmation) {
-		await axios.post("/api/register", {
-			name: inputName,
-			email: inputMail,
-			password: inputPassword,
-			password_confirmation: inputPasswordConfirmation,
-		})
-		.then((response) => {
-			const statusCode = response.status;
-			console.log(statusCode);
-			if(statusCode === 201){
-				setSendState(true);
+		await axios.get('/sanctum/csrf-cookie').then(() => {
+			axios.post("/api/register", {
+				name: inputName,
+				email: inputMail,
+				password: inputPassword,
+				password_confirmation: inputPasswordConfirmation,
+			})
+			.then((response) => {
+				const statusCode = response.status;
+				console.log(statusCode);
+				if(statusCode === 201){
+					setSendState(true);
+					return;
+				}
+			})
+			.catch((error) => {
+				console.error(error);
 				return;
-			}
-		})
-		.catch((error) => {
-			console.error(error);
-			return;
+			})
 		})
 	}
 
