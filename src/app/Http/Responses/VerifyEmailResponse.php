@@ -14,6 +14,6 @@ class VerifyEmailResponse implements VerifyEmailResponseContract
      */
     public function toResponse($request)
     {
-        return redirect('dashboard');
+        return redirect('login');
     }
 }
