@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\BookManagementStatusType;
 use App\Models\Book;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -21,7 +22,7 @@ class BookManagementFactory extends Factory
         return [
             'user_id' => User::factory(),
             'book_id' => Book::factory(),
-            'status' => 1
+            'status' => BookManagementStatusType::IN_RENTAL->value
         ];
     }
 }

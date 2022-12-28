@@ -55,7 +55,7 @@ class BookManagementPatchTest extends TestCase
             [
                 'user_id' => $this->bookManagement->user_id,
                 'book_id' => $this->bookManagement->book_id,
-                'status' => BookManagementStatusType::COMPLETE
+                'status' => BookManagementStatusType::COMPLETE->value
             ]
         );
     }

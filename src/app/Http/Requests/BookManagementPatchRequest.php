@@ -25,8 +25,6 @@ class BookManagementPatchRequest extends FormRequest
      */
     public function rules()
     {
-        // dd(Rule::enum(BookManagementStatusType::APPLYING_RETURN->value));
-
         return [
             'status' => ['required', Rule::in([BookManagementStatusType::APPLYING_RETURN->value])],
             'userId' => 'required|integer'

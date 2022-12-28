@@ -70,7 +70,7 @@ class BookManagementController extends Controller
     ): Response|JsonResponse {
         $user = Auth::user();
         // 管理者でなければ弾く
-        if ($user->is_admin !== UserType::ADMIN) {
+        if ($user->is_admin !== UserType::ADMIN->value) {
             return response()->json(['message' => '権限がありません。'], 403);
         }
 
