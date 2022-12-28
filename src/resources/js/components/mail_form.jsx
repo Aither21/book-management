@@ -30,23 +30,25 @@ const MailForm = (props) => {
 	}
 
 	async function registerRequest(inputName, inputMail, inputPassword, inputPasswordConfirmation) {
-		await axios.post("/api/register", {
-			name: inputName,
-			email: inputMail,
-			password: inputPassword,
-			password_confirmation: inputPasswordConfirmation,
-		})
-		.then((response) => {
-			const statusCode = response.status;
-			console.log(statusCode);
-			if(statusCode === 201){
-				setSendState(true);
+		await axios.get('/sanctum/csrf-cookie').then(() => {
+			axios.post("/api/register", {
+				name: inputName,
+				email: inputMail,
+				password: inputPassword,
+				password_confirmation: inputPasswordConfirmation,
+			})
+			.then((response) => {
+				const statusCode = response.status;
+				console.log(statusCode);
+				if(statusCode === 201){
+					setSendState(true);
+					return;
+				}
+			})
+			.catch((error) => {
+				console.error(error);
 				return;
-			}
-		})
-		.catch((error) => {
-			console.error(error);
-			return;
+			})
 		})
 	}
 
@@ -57,11 +59,21 @@ const MailForm = (props) => {
 			<>
 			<p>仮登録情報を入力してください</p>
 			<p className="text-red-500">{validateError}</p>
-			<input type="text" name="name" className="border" onChange={(event) => changeName(event)}></input>
+			<p className="w-44 mt-2">名前：</p>
+			<input width={50}
+			type="text" name="name" className="border" onChange={(event) => changeName(event)}></input>
+			
+			<p className="w-44 mt-2">メール：</p>
 			<input type="text" name="mail" className="border" onChange={(event) => changeMail(event)}></input>
+			
+			<p className="w-44 mt-2">パスワード：</p>
 			<input type="text" name="password" className="border" onChange={(event) => changePassword(event)}></input>
+			
+			<p className="w-44 mt-2">パスワード(確認)：</p>
 			<input type="text" name="password_confirmation" className="border" onChange={(event) => changePasswordConfirmation(event)}></input>
-			<button onClick={() => registerRequest(nameState, mailState, passwordState, passwordConfirmationState)}>仮登録する</button>
+			
+			<button className="mt-7 border p-4 cursor-pointer"
+			onClick={() => registerRequest(nameState, mailState, passwordState, passwordConfirmationState)}>仮登録する</button>
 			</>
 			:
 			<>

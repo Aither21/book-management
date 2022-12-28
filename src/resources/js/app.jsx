@@ -1,14 +1,20 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Header } from './pages/header';
 import { Home } from './pages/home';
 import { PreUserRegisterForm } from './pages/pre_user_register_form';
 import { Login } from './pages/login_form';
-import { Book } from './pages/book';
+import { BookList } from './pages/book_list';
+import { BookShow } from './pages/book_show';
 import { NotFound } from './pages/not_found';
 
 const App = () => {
+	const [isAuthState, setIsAuthState] = useState({});
+  useEffect(() => {
+    setIsAuthState(document.cookie);
+    // console.log(isAuthState);
+  },[]);
   return(
       <BrowserRouter>
         <>
@@ -18,7 +24,8 @@ const App = () => {
                 <Route path='/' element={ <Home explanation = {'※開発用に仮で作成しました'} linkPreUserRegisterForm = '仮会員登録画面へ' />} />
                 <Route path='/pre_user/register' element={<PreUserRegisterForm />} />
                 <Route path='/login' element={<Login />} />
-                <Route path='/book/list' element={<Book />} />
+                <Route path='/book/list' element={<BookList />} />
+                <Route path='/book' element={<BookShow />} />
                 <Route path='*' element={<NotFound />} />
             </Routes>
           </div>
