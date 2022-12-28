@@ -19,7 +19,7 @@ class BookManagementService
     BookManagement::create([
       'user_id' => $userId,
       'book_id' => $bookId,
-      'status' => BookManagementStatusType::IN_RENTAL
+      'status' => BookManagementStatusType::IN_RENTAL->value
     ]);
   }
 
@@ -33,7 +33,7 @@ class BookManagementService
     BookManagement $bookManagement,
     BookManagementStatusType $status
   ): void {
-    $bookManagement->status = $status;
+    $bookManagement->status = $status->value;
     $bookManagement->save();
   }
 
@@ -50,7 +50,7 @@ class BookManagementService
       return $query->whereUserId($userId);
     })
       ->whereBookId($bookId)
-      ->whereNot('status', BookManagementStatusType::COMPLETE)
+      ->whereNot('status', BookManagementStatusType::COMPLETE->value)
       ->first();
   }
 }

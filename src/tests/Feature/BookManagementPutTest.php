@@ -62,7 +62,7 @@ class BookManagementPutTest extends TestCase
     public function testGenerateBookManagement()
     {
         // セットアップした図書のステータスを完了にする
-        $this->bookManagement->status = BookManagementStatusType::COMPLETE;
+        $this->bookManagement->status = BookManagementStatusType::COMPLETE->value;
         $this->bookManagement->save();
 
         $response = $this->actingAs(
