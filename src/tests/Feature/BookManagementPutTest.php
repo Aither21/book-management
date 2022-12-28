@@ -103,7 +103,8 @@ class BookManagementPutTest extends TestCase
         $response->assertStatus(401);
         $this->assertSame(
             ['message' => 'この図書は他のユーザーがレンタル中です。'],
-        $response->json());
+            $response->json()
+        );
     }
 
     /**
@@ -122,6 +123,7 @@ class BookManagementPutTest extends TestCase
         $response->assertStatus(401);
         $this->assertSame(
             ['message' => 'リクエストが不正です。'],
-        $response->json());
+            $response->json()
+        );
     }
 }
