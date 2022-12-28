@@ -25,5 +25,6 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::controller(BookManagementController::class)->group(function () {
     Route::put('/v1/book-management/{bookId}', 'update');
     Route::patch('/v1/book-management/{bookId}', 'adminUpdate');
+    Route::get('/v1/book-management', 'index');
   });
 });

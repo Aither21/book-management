@@ -4,6 +4,8 @@ namespace App\Http\Services;
 
 use App\Enums\BookManagementStatusType;
 use App\Models\BookManagement;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class BookManagementService
 {
@@ -52,5 +54,20 @@ class BookManagementService
       ->whereBookId($bookId)
       ->whereNot('status', BookManagementStatusType::COMPLETE->value)
       ->first();
+  }
+
+  /**
+   * 図書管理ステータスが返却申請中のみ取得する
+   *
+   * @return LengthAwarePaginator
+   */
+  public function getBookManagements(): LengthAwarePaginator
+  {
+    return BookManagement::with([
+      'book',
+      'user'
+    ])->whereStatus(
+      BookManagementStatusType::APPLYING_RETURN->value
+    )->paginate(10);
   }
 }

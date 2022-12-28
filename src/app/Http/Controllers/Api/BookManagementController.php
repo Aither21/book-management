@@ -7,6 +7,7 @@ use App\Enums\UserType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BookManagementPatchRequest;
 use App\Http\Requests\BookManagementPutRequest;
+use App\Http\Resources\BookManagementCollection;
 use App\Http\Services\BookManagementService;
 use Auth;
 use Illuminate\Http\JsonResponse;
@@ -19,6 +20,21 @@ class BookManagementController extends Controller
     public function __construct(BookManagementService $bookManagementService)
     {
         $this->bookManagementService = $bookManagementService;
+    }
+
+    public function index()
+    {
+        $user = Auth::user();
+        // 管理者でなければ弾く
+        if ($user->is_admin !== UserType::ADMIN->value) {
+            return response()->json(['message' => '権限がありません。'], 403);
+        }
+
+        // $bookManagements = $this->bookManagementService->getBookManagements();
+
+        return new BookManagementCollection(
+            $this->bookManagementService->getBookManagements()
+        );
     }
 
     /**
