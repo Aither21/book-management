@@ -30,9 +30,10 @@ class BookManagementService
    * @return void
    */
   public function updateBookManagementStatus(
-    BookManagement $bookManagement
+    BookManagement $bookManagement,
+    BookManagementStatusType $status
   ): void {
-    $bookManagement->status = BookManagementStatusType::APPLYING_RETURN;
+    $bookManagement->status = $status;
     $bookManagement->save();
   }
 

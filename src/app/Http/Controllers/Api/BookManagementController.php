@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\BookManagementStatusType;
+use App\Enums\UserType;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BookManagementPatchRequest;
 use App\Http\Requests\BookManagementPutRequest;
 use App\Http\Services\BookManagementService;
 use Auth;
@@ -43,11 +46,41 @@ class BookManagementController extends Controller
             return response()->noContent();
         } elseif (!is_null($bookManagementPutRequest->status)) {
             // 図書レンタル返却申請
-            $this->bookManagementService->updateBookManagementStatus($bookManagement);
+            $this->bookManagementService->updateBookManagementStatus(
+                $bookManagement,
+                BookManagementStatusType::APPLYING_RETURN
+            );
             return response()->noContent();
         }
 
         // レンタル中の図書を選択しリクエストにステータスがない場合
         return response()->json(['message' => 'リクエストが不正です。'], 401);
+    }
+
+    /**
+     * 図書の返却完了
+     *
+     * @param BookManagementPatchRequest $bookManagementPatchRequest
+     * @param integer $bookId
+     * @return Response|JsonResponse
+     */
+    public function adminUpdate(
+        BookManagementPatchRequest $bookManagementPatchRequest,
+        int $bookId
+    ): Response|JsonResponse {
+        $user = Auth::user();
+        // 管理者でなければ弾く
+        if ($user->is_admin !== UserType::ADMIN) {
+            return response()->json(['message' => '権限がありません。'], 403);
+        }
+
+        $request = $bookManagementPatchRequest->validated();
+        $bookManagement = $this->bookManagementService->getBookManagement($bookId, $request['userId']);
+        $this->bookManagementService->updateBookManagementStatus(
+            $bookManagement,
+            BookManagementStatusType::COMPLETE
+        );
+
+        return response()->noContent();
     }
 }
