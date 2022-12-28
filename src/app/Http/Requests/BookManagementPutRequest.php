@@ -26,7 +26,7 @@ class BookManagementPutRequest extends FormRequest
     public function rules()
     {
         return [
-            'status' => ['nullable', Rule::enum(BookManagementStatusType::IN_RENTAL)]
+            'status' => ['nullable', Rule::in([BookManagementStatusType::IN_RENTAL->value])]
         ];
     }
 }

@@ -41,7 +41,7 @@ class BookManagementPutTest extends TestCase
             'sanctum'
         )->put(
             '/api/v1/book-management/' . $this->book->id,
-            ['status' => BookManagementStatusType::IN_RENTAL]
+            ['status' => BookManagementStatusType::IN_RENTAL->value]
         );
         $response->assertStatus(204);
         $this->assertDatabaseHas(
@@ -49,7 +49,7 @@ class BookManagementPutTest extends TestCase
             [
                 'user_id' => $this->bookManagement->user_id,
                 'book_id' => $this->bookManagement->book_id,
-                'status' => BookManagementStatusType::APPLYING_RETURN
+                'status' => BookManagementStatusType::APPLYING_RETURN->value
             ]
         );
     }
@@ -77,7 +77,7 @@ class BookManagementPutTest extends TestCase
             [
                 'user_id' => $this->bookManagement->user_id,
                 'book_id' => $this->bookManagement->book_id,
-                'status' => BookManagementStatusType::IN_RENTAL
+                'status' => BookManagementStatusType::IN_RENTAL->value
             ]
         );
     }
