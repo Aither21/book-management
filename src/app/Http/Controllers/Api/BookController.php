@@ -26,7 +26,10 @@ class BookController extends Controller
     public function index(BookGetRequest $request): BookCollection
     {
         return new BookCollection(
-            $this->bookService->getBooks()
+            $this->bookService->getBooks(
+                $request['freeword'],
+                $request['sort']
+                )
         );
     }
 
