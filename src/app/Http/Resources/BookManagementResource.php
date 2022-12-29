@@ -6,7 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class BookManagementResource extends JsonResource
 {
-    public static $warp = 'bookManagements';
+    public static $warp = 'bookManagement';
 
     /**
      * Transform the resource into an array.
