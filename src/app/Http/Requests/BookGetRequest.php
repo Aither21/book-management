@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\SortType;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class BookGetRequest extends FormRequest
 {
@@ -24,7 +26,9 @@ class BookGetRequest extends FormRequest
     public function rules()
     {
         return [
-            'page' => 'nullable|integer'
+            'page' => 'nullable|integer',
+            'freeword' => 'nullable|string|max:150',
+            'sort' =>  ['required', Rule::in(SortType::values())]
         ];
     }
 }
