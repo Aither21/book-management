@@ -24,7 +24,7 @@ class BookManagementPatchTest extends TestCase
         parent::setUp();
         $this->withoutMiddleware();
         $this->user = User::factory()->create();
-        $this->adminUser = User::factory()->create(['is_admin' => UserType::ADMIN]);
+        $this->adminUser = User::factory()->create(['is_admin' => UserType::ADMIN->value]);
         $this->book = Book::factory()->create();
         $this->bookManagement = BookManagement::factory()->create([
             'user_id' => $this->user->id,
