@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\UserType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BookGetRequest;
+use App\Http\Requests\BookPostRequest;
 use App\Http\Resources\BookCollection;
 use App\Http\Resources\BookResource;
 use App\Http\Services\BookService;
+use Auth;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 
 class BookController extends Controller
 {
@@ -29,7 +34,7 @@ class BookController extends Controller
             $this->bookService->getBooks(
                 $request['freeword'],
                 $request['sort']
-                )
+            )
         );
     }
 
@@ -44,5 +49,23 @@ class BookController extends Controller
         return new BookResource(
             $this->bookService->getBook($bookId)
         );
+    }
+
+    /**
+     * 図書の新規作成
+     *
+     * @param BookPostRequest $request
+     * @return Response|JsonResponse
+     */
+    public function store(BookPostRequest $request): Response|JsonResponse
+    {
+        $user = Auth::user();
+        // 管理者でなければ弾く
+        if ($user->is_admin !== UserType::ADMIN->value) {
+            return response()->json(['message' => '権限がありません。'], 403);
+        }
+
+        $this->bookService->generateBook($request->toBook());
+        return response()->noContent();
     }
 }
