@@ -22,7 +22,7 @@ class UserResource extends JsonResource
             'company' => $this->company,
             'createdAt' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
             'updatedAt' => Carbon::parse($this->updated_at)->format('Y-m-d H:i:s'),
-            'isAdmin' => $this->is_admin
+            'isAdmin' => $this->is_admin ? true : false
         ];
     }
 }

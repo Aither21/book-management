@@ -64,7 +64,7 @@ class AuthenticationTest extends TestCase
         'company' => $this->user->company,
         'createdAt' => Carbon::parse($this->user->created_at)->format('Y-m-d H:i:s'),
         'updatedAt' => Carbon::parse($this->user->updated_at)->format('Y-m-d H:i:s'),
-        'isAdmin' => $this->user->is_admin
+        'isAdmin' => false
       ],
       $response->json()['data']
     );
