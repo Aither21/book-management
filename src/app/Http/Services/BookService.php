@@ -43,4 +43,15 @@ class BookService
       ->orderBy('id', SortType::from($sort)->name)
       ->paginate(10);
   }
+
+  /**
+   * 図書の新規作成
+   *
+   * @param Book $book
+   * @return void
+   */
+  public function generateBook(Book $book): void
+  {
+    $book->save();
+  }
 }

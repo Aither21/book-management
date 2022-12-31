@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::controller(BookController::class)->group(function () {
     Route::get('/v1/book', 'index');
     Route::get('/v1/book/{bookId}', 'show');
+    Route::post('/v1/book', 'store');
   });
   Route::controller(BookManagementController::class)->group(function () {
     Route::put('/v1/book-management/{bookId}', 'update');
