@@ -39,6 +39,5 @@ class BookPostRequest extends FormRequest
         $book->author = $requestBook['author'];
         $book->company = $requestBook['company'];
         return $book;
-
     }
 }

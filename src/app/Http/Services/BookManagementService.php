@@ -4,7 +4,6 @@ namespace App\Http\Services;
 
 use App\Enums\BookManagementStatusType;
 use App\Models\BookManagement;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class BookManagementService
