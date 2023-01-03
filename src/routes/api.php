@@ -20,6 +20,7 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::controller(UserController::class)->group(function () {
     Route::get('/user', 'index');
     Route::get('/v1/users', 'list');
+    Route::patch('/v1/user/{userId}', 'update');
   });
   Route::controller(BookController::class)->group(function () {
     Route::get('/v1/book', 'index');

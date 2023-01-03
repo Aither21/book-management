@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserService
@@ -15,5 +16,23 @@ class UserService
   public function getUsers(): LengthAwarePaginator
   {
     return User::paginate(100);
+  }
+
+  /**
+   * ユーザーの更新
+   *
+   * @param User $user
+   * @param integer $userId
+   * @return void
+   * @throws ModelNotFoundException
+   */
+  public function updateUser(User $user, int $userId): void
+  {
+    $updatedUser = User::findOrFail($userId);
+
+    $updatedUser->name = $user->name;
+    $updatedUser->email = $user->email;
+    $updatedUser->company = $user->company;
+    $updatedUser->save();
   }
 }

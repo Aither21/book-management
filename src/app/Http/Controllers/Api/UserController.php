@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use App\Enums\UserType;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserPostRequest;
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
 use App\Http\Services\UserService;
 use Auth;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 
 class UserController extends Controller
 {
@@ -41,5 +43,28 @@ class UserController extends Controller
     return new UserCollection(
       $this->userService->getUsers()
     );
+  }
+
+  /**
+   * ユーザーの更新
+   *
+   * @param UserPostRequest $userPostRequest
+   * @param integer $userId
+   * @return Response|JsonResponse
+   */
+  public function update(
+    UserPostRequest $userPostRequest,
+    int $userId
+  ): Response|JsonResponse {
+    $user = Auth::user();
+    if ($user->id !== $userId) {
+      return response()->json(['message' => 'ユーザーとリクエストが一致しません。'], 403);
+    }
+
+    $this->userService->updateUser(
+      $userPostRequest->toUser(),
+      $userId
+    );
+    return response()->noContent();
   }
 }
