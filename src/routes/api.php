@@ -17,7 +17,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->group(function () {
-  Route::get('/user', [UserController::class, 'index']);
+  Route::controller(UserController::class)->group(function () {
+    Route::get('/user', 'index');
+    Route::get('/v1/users', 'list');
+  });
   Route::controller(BookController::class)->group(function () {
     Route::get('/v1/book', 'index');
     Route::get('/v1/book/{bookId}', 'show');
