@@ -6,6 +6,7 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Carbon\Carbon;
+use Hash;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AuthenticationTest extends TestCase
@@ -68,5 +69,28 @@ class AuthenticationTest extends TestCase
       ],
       $response->json()['data']
     );
+  }
+
+  /**
+   * パスワード変更API、正常系
+   *
+   * @return void
+   */
+  public function testUpdatePassword()
+  {
+    $password = bcrypt('sirotanist');
+    $request = [
+      'current_password' => 'password',
+      'password' => $password,
+      'password_confirmation' => $password,
+    ];
+    $this->actingAs($this->user, 'sanctum')
+      ->json('PUT', '/api/user/password', $request)->assertOk();
+
+    // ユーザー情報を変更したのでrefresh()を使って値を更新する
+    $this->user->refresh();
+
+    // 変更したパスワードがユーザーのパスワードと一致しているか確認
+    $this->assertTrue(Hash::check($password, $this->user->password));
   }
 }
