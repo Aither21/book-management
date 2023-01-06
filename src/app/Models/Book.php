@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $id 書籍ID
  * @property string $name 書籍名
  * @property string $author 著者名
+ * @property string $image_number 画像番号
  * @property string $company 会社名
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
@@ -36,6 +37,7 @@ class Book extends Model
     protected $fillable = [
         'name',
         'author',
+        'image_number',
         'company',
     ];
 
