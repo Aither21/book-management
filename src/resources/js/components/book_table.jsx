@@ -17,7 +17,7 @@ const BookTable = (props) => {
 					<div className="container px-5 py-16 mx-auto">
 						<div className="-my-8 divide-y-2 divide-gray-100">
 						{props.lists?.map((value, index) => {
-							return <Book id={value.id} name={value.name} author={value.author} company={value.company} key={index.toString()} />
+							return <Book id={value.id} name={value.name} author={value.author} imageUrl={value.imageUrl} company={value.company} key={index.toString()} />
 						})}
 						</div>
 					</div>
