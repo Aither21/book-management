@@ -6,7 +6,7 @@ use App\Enums\BookManagementStatusType;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class BookManagementPatchRequest extends FormRequest
+class BookManagementGetListRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,8 +29,7 @@ class BookManagementPatchRequest extends FormRequest
             'status' => ['required', Rule::in([
                 BookManagementStatusType::APPLYING_RENTAL->value,
                 BookManagementStatusType::APPLYING_RETURN->value
-            ])],
-            'userId' => 'required|integer'
+            ])]
         ];
     }
 }

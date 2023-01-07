@@ -43,7 +43,11 @@ class BookManagementGetListTest extends TestCase
         $response = $this->actingAs(
             $this->adminUser,
             'sanctum'
-        )->get('/api/v1/book-management')
+        )->json(
+            'GET',
+            '/api/v1/book-management',
+            ['status' => BookManagementStatusType::APPLYING_RETURN->value]
+        )
             ->assertOk();
 
         // 10ページ分の書籍返却申請レコード取得

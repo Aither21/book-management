@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Enums\BookManagementStatusType;
 use App\Enums\UserType;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BookManagementGetListRequest;
 use App\Http\Requests\BookManagementPatchRequest;
 use App\Http\Requests\BookManagementPutRequest;
 use App\Http\Resources\BookManagementCollection;
@@ -22,7 +23,7 @@ class BookManagementController extends Controller
         $this->bookManagementService = $bookManagementService;
     }
 
-    public function index()
+    public function index(BookManagementGetListRequest $bookManagementGetListRequest)
     {
         $user = Auth::user();
         // 管理者でなければ弾く
@@ -30,10 +31,8 @@ class BookManagementController extends Controller
             return response()->json(['message' => '権限がありません。'], 403);
         }
 
-        // $bookManagements = $this->bookManagementService->getBookManagements();
-
         return new BookManagementCollection(
-            $this->bookManagementService->getBookManagements()
+            $this->bookManagementService->getBookManagements($bookManagementGetListRequest['status'])
         );
     }
 
@@ -90,11 +89,21 @@ class BookManagementController extends Controller
             return response()->json(['message' => '権限がありません。'], 403);
         }
 
+        switch ($bookManagementPatchRequest['status']) {
+            case BookManagementStatusType::APPLYING_RENTAL->value:
+                $updateStatus = BookManagementStatusType::IN_RENTAL;
+                break;
+            
+            case BookManagementStatusType::APPLYING_RETURN->value:
+                $updateStatus = BookManagementStatusType::COMPLETE;
+                break;
+        }
+
         $request = $bookManagementPatchRequest->validated();
         $bookManagement = $this->bookManagementService->getBookManagement($bookId, $request['userId']);
         $this->bookManagementService->updateBookManagementStatus(
             $bookManagement,
-            BookManagementStatusType::COMPLETE
+            $updateStatus
         );
 
         return response()->noContent();
