@@ -4,7 +4,7 @@ import { BookTable } from '../components/book_table';
 
 const BookList = () => {
 	const [bookListState, setBookListState] = useState({});
-	const isFirstRender = useRef(false);
+	const isFirstRender = useRef(true);
 	useEffect(() => {
 		isFirstRender.current = true;
 	}, [])
