@@ -21,7 +21,9 @@ return new class extends Migration
                 ->nullable();
         });
 
-        $this->updateBooks();
+        if (env('local')) {
+            $this->updateBooks();
+        }
     }
 
     /**

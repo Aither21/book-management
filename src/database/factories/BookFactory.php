@@ -19,6 +19,7 @@ class BookFactory extends Factory
         return [
             'name' => fake()->name(),
             'author' => fake()->text(30),
+            'image_number' => fake()->text(10),
             'company' => 'KITU' //Komazawa IT Union
         ];
     }

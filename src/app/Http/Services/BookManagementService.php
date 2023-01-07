@@ -20,7 +20,7 @@ class BookManagementService
     BookManagement::create([
       'user_id' => $userId,
       'book_id' => $bookId,
-      'status' => BookManagementStatusType::IN_RENTAL->value
+      'status' => BookManagementStatusType::APPLYING_RENTAL->value
     ]);
   }
 
@@ -58,15 +58,14 @@ class BookManagementService
   /**
    * 図書管理ステータスが返却申請中のみ取得する
    *
+   * @param integer $status
    * @return LengthAwarePaginator
    */
-  public function getBookManagements(): LengthAwarePaginator
+  public function getBookManagements(int $status): LengthAwarePaginator
   {
     return BookManagement::with([
       'book',
       'user'
-    ])->whereStatus(
-      BookManagementStatusType::APPLYING_RETURN->value
-    )->paginate(10);
+    ])->whereStatus($status)->paginate(10);
   }
 }

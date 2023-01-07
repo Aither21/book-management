@@ -77,7 +77,7 @@ class BookManagementPutTest extends TestCase
             [
                 'user_id' => $this->bookManagement->user_id,
                 'book_id' => $this->bookManagement->book_id,
-                'status' => BookManagementStatusType::IN_RENTAL->value
+                'status' => BookManagementStatusType::APPLYING_RENTAL->value
             ]
         );
     }
