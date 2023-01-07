@@ -30,16 +30,17 @@ const LoginForm = (props) => {
 					axios.get('/api/user').then((data) => {
 						const isAdmin = data.data.data.isAdmin;
 						console.log(isAdmin);
-						if(isAdmin === 1){
+						if(isAdmin === true){
 							document.location = "/admin/book/list";
 						}
 						else {
 							document.location = "/book/list";
 						}
 					})
-				// }
-			})
-			.catch((error) => {
+					// }
+				})
+				.catch((error) => {
+				// document.location = "/book/list";
 				console.error(error);
 				return;
 			})
