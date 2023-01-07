@@ -20,7 +20,9 @@ class BookManagementResource extends JsonResource
             'id' => $this->id,
             'name' => $this->book->name,
             'author' => $this->book->author,
+            'imageUrl' => 'https://images-na.ssl-images-amazon.com/images/P/' . $this->book->image_number . '.09.LZZZZZZZ',
             'company' => $this->book->company,
+            'status' => $this->status,
             'userName' => $this->user->name
         ];
     }

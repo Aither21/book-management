@@ -81,7 +81,7 @@ const BookDetail = (props) => {
 						</button> */}
 						</div>
 					</div>
-					<img alt="ecommerce" className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src="https://dummyimage.com/400x400"></img>
+					<img alt="ecommerce" className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src={props.detail.imageUrl}></img>
 					</div>
 				</div>
 			</section>

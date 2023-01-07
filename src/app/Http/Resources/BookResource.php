@@ -22,6 +22,7 @@ class BookResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'author' => $this->author,
+            'imageUrl' => 'https://images-na.ssl-images-amazon.com/images/P/' . $this->image_number . '.09.LZZZZZZZ',
             'company' => $this->company,
             'createdAt' => Carbon::parse($this->created_at)->format('Y-m-d'),
             'status' => $bookManagement

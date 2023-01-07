@@ -4,7 +4,7 @@ import React from "react";
 const Book = (props) => {
 	const BookPath = `/book?bookId=${props.id}`;
 
-	return(
+	return (
 		<div>
 			<table className="border">
 				<tbody>
@@ -18,8 +18,9 @@ const Book = (props) => {
 			</table>
 			<div className="py-8 flex flex-wrap md:flex-nowrap justify-center">
 				<div className="w-80 md:w-40 h-80 md:h-40 md:mb-0 mr-5 mb-6 flex-shrink-0 flex flex-col border justify-center items-center">
-					<span className="font-semibold title-font text-gray-700">画像</span>
-					<span className="mt-1 text-gray-500 text-sm">100×100</span>
+					<img src={props.imageUrl} width="150" height="175" />
+					{/* <span className="font-semibold title-font text-gray-700">画像</span>
+				<span className="mt-1 text-gray-500 text-sm">100×100</span> */}
 				</div>
 				<div className="md:flex-grow">
 					<a href={BookPath}>
@@ -44,4 +45,4 @@ const Book = (props) => {
 	);
 }
 
-export {Book} ;
+export { Book };
