@@ -16,13 +16,14 @@ const LoginForm = (props) => {
 		setPasswordState(event.target.value);
 	}
 
-    async function loginRequest(inputMail, inputPassword) {
+	async function loginRequest(inputMail, inputPassword) {
 		await axios.get('/sanctum/csrf-cookie').then(() => {
 			axios.post("/api/login", {
 				email: inputMail,
 				password: inputPassword,
 			})
 			.then((response) => {
+				console.log(response);
 				const statusCode = response.status;
 				console.log(statusCode);
 				// if(statusCode === 200){
@@ -30,7 +31,7 @@ const LoginForm = (props) => {
 						const isAdmin = data.data.data.isAdmin;
 						console.log(isAdmin);
 						if(isAdmin === 1){
-							document.location = "admin/book/list";
+							document.location = "/admin/book/list";
 						}
 						else {
 							document.location = "/book/list";

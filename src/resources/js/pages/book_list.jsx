@@ -1,6 +1,8 @@
 import { React, useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { BookTable } from '../components/book_table';
+import { SidePanel } from "../components/side_panel";
+
 
 const BookList = () => {
 	const [bookListState, setBookListState] = useState({});
@@ -29,7 +31,8 @@ const BookList = () => {
 	if(isFirstRender.current === true){
 		return(
 			<>
-			<div>
+			<div className="flex">
+			<SidePanel />
 			<BookTable lists={bookListState} />
 			</div>
 			</>
