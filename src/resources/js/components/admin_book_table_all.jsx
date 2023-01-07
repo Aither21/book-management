@@ -1,10 +1,10 @@
-import { React, useState, useEffect, useRef } from "react";
+import { React, useState, useEffect, useRef, ReactDOM} from "react";
 import axios from "axios";
-import { BookTable } from '../components/book_table';
+import { BookTable } from './book_table';
 
-const BookList = () => {
+const AdminBookTableAll = (props) => {
 	const [bookListState, setBookListState] = useState({});
-	const isFirstRender = useRef(false);
+	const isFirstRender = useRef(true);
 	useEffect(() => {
 		isFirstRender.current = true;
 	}, [])
@@ -41,4 +41,5 @@ const BookList = () => {
 		);
 	}
 }
-export { BookList };
+
+export {AdminBookTableAll};
