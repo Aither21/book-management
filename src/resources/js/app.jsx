@@ -4,17 +4,29 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Header } from './pages/header';
 import { Home } from './pages/home';
 import { PreUserRegisterForm } from './pages/pre_user_register_form';
-import { Login } from './pages/login_form';
+import { Login } from './pages/login';
 import { BookList } from './pages/book_list';
 import { BookShow } from './pages/book_show';
+import { AdminBookList } from './pages/admin_book_list';
 import { NotFound } from './pages/not_found';
 
 const App = () => {
-	const [isAuthState, setIsAuthState] = useState({});
-  useEffect(() => {
-    setIsAuthState(document.cookie);
-    // console.log(isAuthState);
-  },[]);
+  // const sortOutAuthentication = () => {
+  //   const authData= document.cookie;
+  //   const correntPath= location.pathname;
+  //   const authPathes = ['/book/list', '/book', '/admin/book/list'];
+  //   const someResult = authPathes.some((authPath) => {
+  //     return authPath === correntPath;
+  //   });
+  //   console.log(authData)
+  //   console.log(authData.includes('XSRF-'))
+  //   if(someResult && !authData.includes('XSRF-')){
+  //     return window.location.href = "/login";
+  //   }
+  // }
+  // useEffect(() => {
+  //   sortOutAuthentication();
+  // },[]);
   return(
       <BrowserRouter>
         <>
@@ -26,6 +38,7 @@ const App = () => {
                 <Route path='/login' element={<Login />} />
                 <Route path='/book/list' element={<BookList />} />
                 <Route path='/book' element={<BookShow />} />
+                <Route path='/admin/book/list' element={<AdminBookList />} />
                 <Route path='*' element={<NotFound />} />
             </Routes>
           </div>

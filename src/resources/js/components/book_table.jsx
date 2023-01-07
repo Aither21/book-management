@@ -12,7 +12,7 @@ const BookTable = (props) => {
 	
 	if(isFirstRender.current === true){
 		return (
-			<>
+			<div>
 				<section className="text-gray-600 body-font overflow-hidden">
 					<div className="container px-5 py-16 mx-auto">
 						<div className="-my-8 divide-y-2 divide-gray-100">
@@ -22,7 +22,7 @@ const BookTable = (props) => {
 						</div>
 					</div>
 				</section>
-			</>
+			</div>
 		)
 	}
 	else {
