@@ -66,8 +66,8 @@ const SidePanel = () => {
 		enableSidePanel();
 	},[])
 
-	const [navState, setNavState] = useState("inline");
-	const [navIConState, setNavIconState] = useState("w-44");
+	const [navState, setNavState] = useState("hidden");
+	const [navIConState, setNavIconState] = useState("w-16");
 
 	const toggleNav = () => {
 		if(navState === "hidden"){
