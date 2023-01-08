@@ -33,7 +33,7 @@ const App = () => {
   return(
       <BrowserRouter>
         <>
-          <Header screenName={'Header'}/>
+          <Header />
           <div className="flex justify-center">
             <SidePanel />
             <div className="flex flex-col justify-center items-center">
