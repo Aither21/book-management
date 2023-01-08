@@ -25,14 +25,12 @@ const BookList = () => {
 	}
 	useEffect(() => {
 		getBookRequest();
-		// console.log(bookListState);
 	}, [])
 
 	if(isFirstRender.current === true){
 		return(
 			<>
 			<div className="flex">
-			<SidePanel />
 			<BookTable lists={bookListState} />
 			</div>
 			</>

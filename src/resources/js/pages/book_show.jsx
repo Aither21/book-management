@@ -20,7 +20,6 @@ const BookShow = () => {
 	useEffect(() => {
 		getBookDetailRequest();
 	}, [])
-	// console.log(bookDetailState);
 
 	return(
 		<>
