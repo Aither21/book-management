@@ -24,10 +24,8 @@ const BookDetail = (props) => {
 	const putRentalRequest = async () => {
 		await axios.get('/sanctum/csrf-cookie').then(() => {
 			axios.put(`/api/v1/book-management/${bookId}`)
-			.then(data => {
-				console.log(data);
-			})
 			.catch(data => {
+				console.log(data);
 			})
 		})
 		.catch((data) => {
