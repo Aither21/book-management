@@ -1,5 +1,4 @@
-import { React, useState, useEffect, useRef, ReactDOM} from "react";
-import axios from "axios";
+import { React, useRef } from "react";
 import { AdminBookLent } from './admin_book_lent';
 
 const AdminBookTableLent = (props) => {
