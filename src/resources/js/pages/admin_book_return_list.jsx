@@ -17,7 +17,7 @@ const AdminBookReturnList = () => {
 				location.href='/login';
 			}
 			else {
-				axios.get("/api/v1/book-management")
+				axios.get("/api/v1/book-management?status=3")
 				.then(data => {
 					console.log(data.status)
 					setBookListState(data.data.data);

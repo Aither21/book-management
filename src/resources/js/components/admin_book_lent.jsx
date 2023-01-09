@@ -1,8 +1,9 @@
-import React from "react";
-// import axios from "axios";
+import { React, useEffect } from "react";
+import axios from "axios";
 
 const AdminBookLent = (props) => {
-	const BookPath = `/book?bookId=${props.id}`;
+	const BookId = props.id;
+	const BookPath = `/book?bookId=${BookId}`;
 
 	return(
 		<div className="flex flex-wrap flex-nowrap py-2">
@@ -27,12 +28,9 @@ const AdminBookLent = (props) => {
 					</svg>
 				</a>
 				<div className="flex">
-					<button className={`flex ml-1 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded`}>
-						レンタル許可
-					</button>
-					<button className={`flex ml-1 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded`}>
-						レンタル却下
-					</button>
+					<div className={`flex ml-1 text-white bg-indigo-500 border-0 py-2 px-6 rounded`}>
+						貸出期限：2023-XX-XX
+					</div>
 				</div>
 			</div>
 		</div>
