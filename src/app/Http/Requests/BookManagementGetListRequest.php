@@ -26,10 +26,7 @@ class BookManagementGetListRequest extends FormRequest
     public function rules()
     {
         return [
-            'status' => ['required', Rule::in([
-                BookManagementStatusType::APPLYING_RENTAL->value,
-                BookManagementStatusType::APPLYING_RETURN->value
-            ])]
+            'status' => ['nullable', Rule::in(BookManagementStatusType::values())]
         ];
     }
 }

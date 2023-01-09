@@ -58,14 +58,16 @@ class BookManagementService
   /**
    * 図書管理ステータスが返却申請中のみ取得する
    *
-   * @param integer $status
+   * @param integer|null $status
    * @return LengthAwarePaginator
    */
-  public function getBookManagements(int $status): LengthAwarePaginator
+  public function getBookManagements(?int $status): LengthAwarePaginator
   {
     return BookManagement::with([
       'book',
       'user'
-    ])->whereStatus($status)->paginate(10);
+    ])->when($status, function ($query) use ($status) {
+      return $query->whereStatus($status);
+    })->paginate(10);
   }
 }
