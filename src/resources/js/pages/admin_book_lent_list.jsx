@@ -12,14 +12,13 @@ const AdminBookLentList = () => {
 	const getBookRequest = async () => {
 		await axios.get('/sanctum/csrf-cookie').then((data) => {
 			const sanctumStatus = data.status;
-			console.log(sanctumStatus)
+			console.log(`sanctumStatus:${sanctumStatus}`)
 			if(sanctumStatus !== 204){
 				location.href='/login';
 			}
 			else {
 				axios.get("/api/v1/book-management?status=2")
 				.then(data => {
-					console.log(data.status)
 					setBookListState(data.data.data);
 				})
 				.catch(data => {

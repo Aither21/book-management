@@ -24,12 +24,10 @@ const LoginForm = (props) => {
 			})
 			.then((response) => {
 				const statusCode = response.status;
-				console.log(statusCode);
 				if(statusCode === 200){
 					axios.get('/api/user').then((data) => {
 						const isAdmin = data.data.data.isAdmin;
 						console.log(`isAdmin:${isAdmin}`);
-						console.log(document.cookie)
 						if(isAdmin === true){
 							document.cookie = 'AdminCredentialsAfterLogin=I will be gone in an hour:); Max-Age=3600'; //クッキーに「1時間」ログイン情報を保持
 							document.location = "/admin/book/borrow/list";
@@ -41,7 +39,7 @@ const LoginForm = (props) => {
 					})
 				}
 				else {
-					console.log('ログインできませんでした。');
+					console.log('ログイン情報が正しくありません。');
 				}
 			})
 			.catch((error) => {

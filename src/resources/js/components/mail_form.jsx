@@ -39,7 +39,6 @@ const MailForm = (props) => {
 			})
 			.then((response) => {
 				const statusCode = response.status;
-				console.log(statusCode);
 				if(statusCode === 201||statusCode === 200){
 					setSendState(true);
 					return;

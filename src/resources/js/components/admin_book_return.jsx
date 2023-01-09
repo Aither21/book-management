@@ -7,14 +7,13 @@ const AdminBookReturn = (props) => {
 	const allowReturnRequest = async () => {
 		await axios.get('/sanctum/csrf-cookie').then((data) => {
 			const sanctumStatus = data.status;
-			console.log(sanctumStatus)
+			console.log(`sanctumStatus:${sanctumStatus}`)
 			if(sanctumStatus !== 204){
 				location.href='/login';
 			}
 			else {
 				axios.get('/api/user').then((data) => {
 					const userId = data.data.data.id;
-					console.log(typeof(userId))
 					axios.patch(`/api/v1/book-management/${BookId}`,{
 						status: 3,
 						userId: userId,
@@ -31,14 +30,13 @@ const AdminBookReturn = (props) => {
 	const disallowReturnRequest = async () => {
 		await axios.get('/sanctum/csrf-cookie').then((data) => {
 			const sanctumStatus = data.status;
-			console.log(sanctumStatus)
+			console.log(`sanctumStatus:${sanctumStatus}`)
 			if(sanctumStatus !== 204){
 				location.href='/login';
 			}
 			else {
 				axios.get('/api/user').then((data) => {
 					const userId = data.data.data.id;
-					console.log(typeof(userId))
 					axios.patch(`/api/v1/book-management/${BookId}`,{
 						status: 1,
 						userId: userId,
