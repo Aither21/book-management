@@ -32,7 +32,11 @@ class BookManagementController extends Controller
         }
 
         return new BookManagementCollection(
-            $this->bookManagementService->getBookManagements($bookManagementGetListRequest['status'])
+            $this->bookManagementService->getBookManagements(
+                $bookManagementGetListRequest['status'],
+                $bookManagementGetListRequest['freeword'],
+                $bookManagementGetListRequest['sort']
+            )
         );
     }
 
@@ -93,7 +97,7 @@ class BookManagementController extends Controller
             case BookManagementStatusType::APPLYING_RENTAL->value:
                 $updateStatus = $bookManagementPatchRequest['isRejection'] ? BookManagementStatusType::RENTAL_REJECTION : BookManagementStatusType::IN_RENTAL;
                 break;
-            
+
             case BookManagementStatusType::APPLYING_RETURN->value:
                 $updateStatus = $bookManagementPatchRequest['isRejection'] ? BookManagementStatusType::IN_RENTAL : BookManagementStatusType::COMPLETE;
                 break;
