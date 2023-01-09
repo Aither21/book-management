@@ -25,7 +25,7 @@ const Book = (props) => {
 				setBookStatusColorState('text-green-500');
 				break;
 		}
-	}, [])
+	}, [props.status])
 	return (
 		<div>
 			{/* <table className="border">

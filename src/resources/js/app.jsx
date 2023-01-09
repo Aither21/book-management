@@ -43,9 +43,9 @@ const App = () => {
       <BrowserRouter>
         <>
           <Header />
-          <div className="flex justify-center">
+          <div className="flex justify-center w-full">
             <SidePanel />
-            <div className="flex flex-col justify-center items-center">
+            <div className="flex flex-col justify-center items-center w-full">
               <Routes>
                   <Route path='/' element={ <Home explanation = {'※開発用に仮で作成しました'} linkPreUserRegisterForm = '仮会員登録画面へ' />} />
                   <Route path='/pre_user/register' element={<PreUserRegisterForm />} />
