@@ -1,34 +1,11 @@
-import { React } from "react";
+import { React, useEffect } from "react";
+import axios from "axios";
 
-const AdminBookReturn = (props) => {
+const AdminBookBorrow = (props) => {
 	const BookId = props.id;
 	const BookPath = `/book?bookId=${BookId}`;
 
-	const allowReturnRequest = async () => {
-		await axios.get('/sanctum/csrf-cookie').then((data) => {
-			const sanctumStatus = data.status;
-			console.log(sanctumStatus)
-			if(sanctumStatus !== 204){
-				location.href='/login';
-			}
-			else {
-				axios.get('/api/user').then((data) => {
-					const userId = data.data.data.id;
-					console.log(typeof(userId))
-					axios.patch(`/api/v1/book-management/${BookId}`,{
-						status: 3,
-						userId: userId,
-					})
-					.catch(data => {
-					})
-				})
-			}
-		})
-		.catch((data) => {
-		})
-	}
-
-	const disallowReturnRequest = async () => {
+	const allowBorrowRequest = async () => {
 		await axios.get('/sanctum/csrf-cookie').then((data) => {
 			const sanctumStatus = data.status;
 			console.log(sanctumStatus)
@@ -51,6 +28,32 @@ const AdminBookReturn = (props) => {
 		.catch((data) => {
 		})
 	}
+	
+	const disallowBorrowRequest = async () => {
+		await axios.get('/sanctum/csrf-cookie').then((data) => {
+			const sanctumStatus = data.status;
+			console.log(sanctumStatus)
+			if(sanctumStatus !== 204){
+				location.href='/login';
+			}
+			else {
+				axios.get('/api/user').then((data) => {
+					const userId = data.data.data.id;
+					axios.patch(`/api/v1/book-management/${BookId}`,{
+						status: 3,
+						userId: userId,
+					})
+					.catch(data => {
+						console.log(data)
+					})
+				})
+			}
+		})
+		.catch((data) => {
+			console.log(data)
+		})
+	}
+
 
 	return(
 		<div className="flex flex-wrap flex-nowrap py-2">
@@ -76,12 +79,12 @@ const AdminBookReturn = (props) => {
 				</a>
 				<div className="flex">
 					<button className={`flex ml-1 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded`}
-					onClick={allowReturnRequest}>
-						返却完了
+					onClick={allowBorrowRequest}>
+						貸出許可
 					</button>
 					<button className={`flex ml-1 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded`}
-					onClick={disallowReturnRequest}>
-						返却却下
+					onClick={disallowBorrowRequest}>
+						貸出却下
 					</button>
 				</div>
 			</div>
@@ -89,4 +92,4 @@ const AdminBookReturn = (props) => {
 	);
 }
 
-export {AdminBookReturn} ;
+export {AdminBookBorrow};

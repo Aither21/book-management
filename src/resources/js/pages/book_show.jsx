@@ -6,6 +6,7 @@ import { BookDetail } from '../components/book_detail';
 const BookShow = () => {
 	const [searchParams] = useSearchParams();
 	const bookId = searchParams.get("bookId");
+	console.log(bookId);
 	const [bookDetailState, setBookDetailState] = useState({});
 	const getBookDetailRequest = async () => {
 		await axios.get('/sanctum/csrf-cookie').then(() => {

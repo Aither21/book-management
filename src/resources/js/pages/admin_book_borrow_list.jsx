@@ -1,8 +1,8 @@
 import { React, useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { AdminBookTableLent } from '../components/admin_book_table_lent';
+import { AdminBookTableBorrow } from '../components/admin_book_table_borrow';
 
-const AdminBookLentList = () => {
+const AdminBookBorrowList = () => {
 	const [bookListState, setBookListState] = useState({});
 	const isFirstRender = useRef(false);
 	useEffect(() => {
@@ -17,7 +17,7 @@ const AdminBookLentList = () => {
 				location.href='/login';
 			}
 			else {
-				axios.get("/api/v1/book-management?status=2")
+				axios.get("/api/v1/book-management?status=1")
 				.then(data => {
 					console.log(data.status)
 					setBookListState(data.data.data);
@@ -36,7 +36,7 @@ const AdminBookLentList = () => {
 	if(isFirstRender.current === true){
 		return(
 			<div className="flex">
-				<AdminBookTableLent lists={bookListState}/>
+				<AdminBookTableBorrow lists={bookListState}/>
 			</div>
 		);
 	}
@@ -46,4 +46,4 @@ const AdminBookLentList = () => {
 		);
 	}
 }
-export { AdminBookLentList };
+export { AdminBookBorrowList };
