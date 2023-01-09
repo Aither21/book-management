@@ -8,6 +8,7 @@ enum BookManagementStatusType: int
   case IN_RENTAL = 2;
   case APPLYING_RETURN = 3;
   case COMPLETE = 4;
+  case RENTAL_REJECTION = 5;
 
   public function status(): string
   {
@@ -16,6 +17,7 @@ enum BookManagementStatusType: int
       BookManagementStatusType::IN_RENTAL => '貸出中',
       BookManagementStatusType::APPLYING_RETURN => '返却申請中',
       BookManagementStatusType::COMPLETE => '完了',
+      BookManagementStatusType::RENTAL_REJECTION => '貸出却下',
     };
   }
 
