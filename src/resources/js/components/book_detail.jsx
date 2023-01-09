@@ -44,11 +44,12 @@ const BookDetail = (props) => {
 				setBookStatusColorState('text-yellow-600');
 				setRentalButtonState('hidden');
 			})
-			.catch(data => {
-				console.log(data);
+			.catch(error => {
+				console.error(`BookManagementError:${error}`)
 			})
 		})
-		.catch((data) => {
+		.catch((error) => {
+			console.error(`sanctumError:${error}`)
 		})
 	}
 	return(

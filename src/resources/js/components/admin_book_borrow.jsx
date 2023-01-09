@@ -8,14 +8,13 @@ const AdminBookBorrow = (props) => {
 	const allowBorrowRequest = async () => {
 		await axios.get('/sanctum/csrf-cookie').then((data) => {
 			const sanctumStatus = data.status;
-			console.log(sanctumStatus)
+			console.log(`sanctumStatus:${sanctumStatus}`)
 			if(sanctumStatus !== 204){
 				location.href='/login';
 			}
 			else {
 				axios.get('/api/user').then((data) => {
 					const userId = data.data.data.id;
-					console.log(typeof(userId))
 					axios.patch(`/api/v1/book-management/${BookId}`,{
 						status: 1,
 						userId: userId,
@@ -32,7 +31,7 @@ const AdminBookBorrow = (props) => {
 	const disallowBorrowRequest = async () => {
 		await axios.get('/sanctum/csrf-cookie').then((data) => {
 			const sanctumStatus = data.status;
-			console.log(sanctumStatus)
+			console.log(`sanctumStatus:${sanctumStatus}`)
 			if(sanctumStatus !== 204){
 				location.href='/login';
 			}
@@ -43,14 +42,14 @@ const AdminBookBorrow = (props) => {
 						status: 3,
 						userId: userId,
 					})
-					.catch(data => {
-						console.log(data)
+					.catch(error => {
+						console.error(`/api/user ERROR:${error}`)
 					})
 				})
 			}
 		})
-		.catch((data) => {
-			console.log(data)
+		.catch((error) => {
+			console.error(`sanctumStatus:${error}`)
 		})
 	}
 

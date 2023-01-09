@@ -25,35 +25,20 @@ const SidePanel = () => {
 				return;
 			})
 		})
+		.catch((error) => {
+			console.error(error);
+			return;
+		})
 	}
-	
-	const verifyAuthentication = () => {
-    const authData= document.cookie;
-    const correntPath= location.pathname;
-    const authPathes 
-    = ['/book/list', '/book', '/admin/book/list', '/admin/book/borrow/list',
-      '/admin/book/borrow/list', '/admin/book/return/list', '/admin/book/rent/list'];
-    const collatePathResult = authPathes.some((authPath) => {
-      return authPath === correntPath;
-    });
-    if(collatePathResult && !authData.includes('CredentialsAfterLogin')){
-			IsAdminRequest();
-			return;
-    }
-		else {
-			return;
-		}
-  }
 
 	useEffect(() => {
-		verifyAuthentication();
+		IsAdminRequest();
 	},[])
 	
 	async function logoutRequest() {
 		await axios.post("/api/logout")
 		.then((response) => {
 			const statusCode = response.status;
-			console.log(statusCode);
 			document.location = "/login";
 		})
 		.catch((error) => {
