@@ -43,7 +43,6 @@ const LoginForm = (props) => {
 				}
 			})
 			.catch((error) => {
-			// document.location = "/book/list";
 			console.error(error);
 			return;
 			})

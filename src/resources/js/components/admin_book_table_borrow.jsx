@@ -5,7 +5,7 @@ const AdminBookTableBorrow = (props) => {
 	const isFirstRender = useRef(true);	
 	if(isFirstRender.current === true){
 		return (
-			<div className="border w-full">
+			<div className="border w-full my-10">
 				<section className="text-gray-600 body-font overflow-hidden">
 					<div className="container px-5 mx-auto">
 						<div className="divide-y-2 divide-gray-100">

@@ -94,7 +94,7 @@ const SidePanel = () => {
 	else {
 		if(isAdminState){
 			return (
-				<div className="left-0 flex-col fixed md:top-16 top-8">
+				<div className="left-0 flex-col fixed md:top-16 top-8 z-10">
 					<aside className={navIConState} aria-label="Sidebar">
 						<div className="overflow-y-auto bg-gray-50 rounded dark:bg-gray-800 py-1">
 							<ul className="space-y-2">
@@ -149,7 +149,7 @@ const SidePanel = () => {
 		}
 		else {
 			return (
-				<div className="left-0 flex-col fixed md:top-16 top-8">
+				<div className="left-0 flex-col fixed md:top-16 top-8 z-10">
 					<aside className={navIConState} aria-label="Sidebar">
 						<div className="overflow-y-auto bg-gray-50 rounded dark:bg-gray-800 py-1">
 								<ul className="space-y-2">
