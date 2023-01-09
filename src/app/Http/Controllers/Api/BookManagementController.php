@@ -91,11 +91,11 @@ class BookManagementController extends Controller
 
         switch ($bookManagementPatchRequest['status']) {
             case BookManagementStatusType::APPLYING_RENTAL->value:
-                $updateStatus = BookManagementStatusType::IN_RENTAL;
+                $updateStatus = $bookManagementPatchRequest['isRejection'] ? BookManagementStatusType::RENTAL_REJECTION : BookManagementStatusType::IN_RENTAL;
                 break;
             
             case BookManagementStatusType::APPLYING_RETURN->value:
-                $updateStatus = BookManagementStatusType::COMPLETE;
+                $updateStatus = $bookManagementPatchRequest['isRejection'] ? BookManagementStatusType::IN_RENTAL : BookManagementStatusType::COMPLETE;
                 break;
         }
 
