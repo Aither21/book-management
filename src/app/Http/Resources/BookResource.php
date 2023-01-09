@@ -27,6 +27,8 @@ class BookResource extends JsonResource
             'createdAt' => Carbon::parse($this->created_at)->format('Y-m-d'),
             'status' => $bookManagement
                 ? $bookManagement->status : null,
+            'userId' => $bookManagement
+                ? $bookManagement->user->id : null,
             'userName' => $bookManagement
                 ? $bookManagement->user->name : null
         ];
