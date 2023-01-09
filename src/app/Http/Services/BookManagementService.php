@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Enums\SortType;
 use App\Enums\BookManagementStatusType;
 use App\Models\BookManagement;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -59,15 +60,25 @@ class BookManagementService
    * 図書管理ステータスが返却申請中のみ取得する
    *
    * @param integer|null $status
+   * @param string|null $freeword
+   * @param integer $sort
    * @return LengthAwarePaginator
    */
-  public function getBookManagements(?int $status): LengthAwarePaginator
+  public function getBookManagements(?int $status, ?string $freeword, int $sort): LengthAwarePaginator
   {
     return BookManagement::with([
-      'book',
+      'book' => function ($query) use ($freeword) {
+        return $query->when($freeword, function ($query, $freeword) {
+          return $query->where('name', 'like', "%$freeword%")
+            ->orWhere('author', 'like', "%$freeword%")
+            ->orWhere('company', 'like', "%$freeword%");
+        });
+      },
       'user'
     ])->when($status, function ($query) use ($status) {
       return $query->whereStatus($status);
-    })->paginate(10);
+    })
+    ->orderBy('id', SortType::from($sort)->name)
+    ->paginate(10);
   }
 }
