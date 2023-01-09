@@ -52,6 +52,7 @@ class BookGetTest extends TestCase
                 'company' => $this->book->company,
                 'createdAt' => Carbon::parse($this->book->created_at)->format('Y-m-d'),
                 'status' => $this->bookManagement->status,
+                'userId' => $this->user->id,
                 'userName' => $this->user->name
             ],
             $response->json()['data']
@@ -87,6 +88,7 @@ class BookGetTest extends TestCase
                 'company' => $this->book->company,
                 'createdAt' => Carbon::parse($this->book->created_at)->format('Y-m-d'),
                 'status' => $bookManagement->status,
+                'userId' => $user->id,
                 'userName' => $user->name
             ],
             $response->json()['data']
@@ -117,6 +119,7 @@ class BookGetTest extends TestCase
                 'company' => $book->company,
                 'createdAt' => Carbon::parse($book->created_at)->format('Y-m-d'),
                 'status' => null,
+                'userId' => null,
                 'userName' => null
             ],
             $response->json()['data']
