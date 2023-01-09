@@ -17,9 +17,11 @@ class BookService
   public function getBook(int $bookId): Book
   {
     return Book::with([
-      'bookManagements',
+      'bookManagements' => function ($query) {
+        return $query->orderByDesc('id');
+      },
       'bookManagements.user'
-    ])->firstOrFail();
+    ])->findOrFail($bookId);
   }
 
   /**
@@ -32,7 +34,9 @@ class BookService
   public function getBooks(?string $freeword, int $sort): LengthAwarePaginator
   {
     return Book::with([
-      'bookManagements',
+      'bookManagements' => function ($query) {
+        return $query->orderByDesc('id');
+      },
       'bookManagements.user'
     ])
       ->when($freeword, function ($query, $freeword) {

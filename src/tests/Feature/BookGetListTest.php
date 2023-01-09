@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enums\BookManagementStatusType;
 use App\Enums\SortType;
 use App\Models\Book;
 use App\Models\BookManagement;
@@ -98,6 +99,40 @@ class BookGetListTest extends TestCase
         $this->assertSame(
             $seachBookCompany->id,
             $response->json()['data'][2]['id']
+        );
+    }
+
+    /**
+     * 図書一覧取得API ステータスが最新のレコード取得
+     *
+     * @return void
+     */
+    public function testGetBooksOrderByDesc()
+    {
+        $book = Book::factory()->create(['name' => 'sirotan']);
+
+        BookManagement::factory()->create([
+            'user_id' => $this->user->id,
+            'book_id' => $book->id,
+            'status' => BookManagementStatusType::APPLYING_RENTAL->value
+        ]);
+        // こちらを取得
+        $bookManagement = BookManagement::factory()->create([
+            'user_id' => $this->user->id,
+            'book_id' => $book->id,
+            'status' => BookManagementStatusType::COMPLETE->value
+        ]);
+        $params = http_build_query([
+            'sort' => SortType::ASC->value,
+            'freeword' => 'sirotan'
+        ]);
+        $response = $this->actingAs($this->user, 'sanctum')->json(
+            'GET',
+            '/api/v1/book?' . $params
+        )->assertOk();
+        $this->assertSame(
+            $bookManagement->status,
+            $response->json()['data'][0]['status']
         );
     }
 }
