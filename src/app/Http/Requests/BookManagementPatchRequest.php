@@ -30,7 +30,8 @@ class BookManagementPatchRequest extends FormRequest
                 BookManagementStatusType::APPLYING_RENTAL->value,
                 BookManagementStatusType::APPLYING_RETURN->value
             ])],
-            'userId' => 'required|integer'
+            'userId' => 'required|integer',
+            'isRejection' => 'required|boolean'
         ];
     }
 }

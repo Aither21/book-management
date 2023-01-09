@@ -33,11 +33,69 @@ class BookManagementPatchTest extends TestCase
     }
 
     /**
+     * 図書貸出申請中を貸出中にステータスを更新する
+     *
+     * @return void
+     */
+    public function testUpdateBookManagementStatusByInRental()
+    {
+        $response = $this->actingAs(
+            $this->adminUser,
+            'sanctum'
+        )->patch(
+            '/api/v1/book-management/' . $this->book->id,
+            [
+                'status' => BookManagementStatusType::APPLYING_RENTAL->value,
+                'userId' => $this->user->id,
+                'isRejection' => false
+            ]
+        );
+        $response->assertStatus(204);
+        $this->assertDatabaseHas(
+            BookManagement::class,
+            [
+                'user_id' => $this->bookManagement->user_id,
+                'book_id' => $this->bookManagement->book_id,
+                'status' => BookManagementStatusType::IN_RENTAL->value
+            ]
+        );
+    }
+
+    /**
+     * 図書貸出申請中を貸出却下にステータスを更新する
+     *
+     * @return void
+     */
+    public function testUpdateBookManagementStatusByRentalRejection()
+    {
+        $response = $this->actingAs(
+            $this->adminUser,
+            'sanctum'
+        )->patch(
+            '/api/v1/book-management/' . $this->book->id,
+            [
+                'status' => BookManagementStatusType::APPLYING_RENTAL->value,
+                'userId' => $this->user->id,
+                'isRejection' => true
+            ]
+        );
+        $response->assertStatus(204);
+        $this->assertDatabaseHas(
+            BookManagement::class,
+            [
+                'user_id' => $this->bookManagement->user_id,
+                'book_id' => $this->bookManagement->book_id,
+                'status' => BookManagementStatusType::RENTAL_REJECTION->value
+            ]
+        );
+    }
+
+    /**
      * 図書返却申請中を返却完了にステータスを更新する
      *
      * @return void
      */
-    public function testUpdateBookManagementStatus()
+    public function testUpdateBookManagementStatusByComplete()
     {
         $response = $this->actingAs(
             $this->adminUser,
@@ -46,7 +104,8 @@ class BookManagementPatchTest extends TestCase
             '/api/v1/book-management/' . $this->book->id,
             [
                 'status' => BookManagementStatusType::APPLYING_RETURN->value,
-                'userId' => $this->user->id
+                'userId' => $this->user->id,
+                'isRejection' => false
             ]
         );
         $response->assertStatus(204);
@@ -56,6 +115,35 @@ class BookManagementPatchTest extends TestCase
                 'user_id' => $this->bookManagement->user_id,
                 'book_id' => $this->bookManagement->book_id,
                 'status' => BookManagementStatusType::COMPLETE->value
+            ]
+        );
+    }
+
+    /**
+     * 図書返却申請中を貸出中にステータスを更新する
+     *
+     * @return void
+     */
+    public function testUpdateBookManagementStatusReturnInRental()
+    {
+        $response = $this->actingAs(
+            $this->adminUser,
+            'sanctum'
+        )->patch(
+            '/api/v1/book-management/' . $this->book->id,
+            [
+                'status' => BookManagementStatusType::APPLYING_RETURN->value,
+                'userId' => $this->user->id,
+                'isRejection' => true
+            ]
+        );
+        $response->assertStatus(204);
+        $this->assertDatabaseHas(
+            BookManagement::class,
+            [
+                'user_id' => $this->bookManagement->user_id,
+                'book_id' => $this->bookManagement->book_id,
+                'status' => BookManagementStatusType::IN_RENTAL->value
             ]
         );
     }
@@ -74,7 +162,8 @@ class BookManagementPatchTest extends TestCase
             '/api/v1/book-management/' . $this->book->id,
             [
                 'status' => BookManagementStatusType::APPLYING_RETURN->value,
-                'userId' => $this->user->id
+                'userId' => $this->user->id,
+                'isRejection' => true
             ]
         );
         $response->assertStatus(403);
@@ -94,7 +183,8 @@ class BookManagementPatchTest extends TestCase
     {
         $baseParam = [
             'status' => BookManagementStatusType::APPLYING_RETURN->value,
-            'userId' => $this->user->id
+            'userId' => $this->user->id,
+            'isRejection' => true
         ];
         $requestParam = array_replace($baseParam, $param);
         $response = $this->actingAs(
@@ -116,7 +206,8 @@ class BookManagementPatchTest extends TestCase
         yield 'データが無い' => [
             [
                 'status' => '',
-                'userId' => ''
+                'userId' => '',
+                'isRejection' => ''
             ]
         ];
         yield 'statusが返却申請中以外' => [
@@ -142,6 +233,16 @@ class BookManagementPatchTest extends TestCase
         yield 'userIdがnull' => [
             [
                 'userId' => null
+            ]
+        ];
+        yield 'isRejectionが文字列' => [
+            [
+                'isRejection' => 'しろたん'
+            ]
+        ];
+        yield 'isRejectionがnull' => [
+            [
+                'isRejection' => null
             ]
         ];
     }
