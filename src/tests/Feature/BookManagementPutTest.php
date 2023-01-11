@@ -34,7 +34,7 @@ class BookManagementPutTest extends TestCase
      *
      * @return void
      */
-    public function testUpdateBookManagementStatus()
+    public function testUpdateBookManagementStatus_APPLYING_RETURN()
     {
         $response = $this->actingAs(
             $this->user,
@@ -50,6 +50,55 @@ class BookManagementPutTest extends TestCase
                 'user_id' => $this->bookManagement->user_id,
                 'book_id' => $this->bookManagement->book_id,
                 'status' => BookManagementStatusType::APPLYING_RETURN->value
+            ]
+        );
+    }
+    /**
+     * 図書レンタル中を返却申請中にステータスを更新する
+     *
+     * @return void
+     */
+    public function testUpdateBookManagementStatus_RENTAL_REJECTION()
+    {
+        $response = $this->actingAs(
+            $this->user,
+            'sanctum'
+        )->put(
+            '/api/v1/book-management/' . $this->book->id,
+            ['status' => BookManagementStatusType::APPLYING_RENTAL->value]
+        );
+        $response->assertStatus(204);
+        $this->assertDatabaseHas(
+            BookManagement::class,
+            [
+                'user_id' => $this->bookManagement->user_id,
+                'book_id' => $this->bookManagement->book_id,
+                'status' => BookManagementStatusType::RENTAL_REJECTION->value
+            ]
+        );
+    }
+
+    /**
+     * 図書レンタル中を返却申請中にステータスを更新する
+     *
+     * @return void
+     */
+    public function testUpdateBookManagementStatus_IN_RENTAL()
+    {
+        $response = $this->actingAs(
+            $this->user,
+            'sanctum'
+        )->put(
+            '/api/v1/book-management/' . $this->book->id,
+            ['status' => BookManagementStatusType::APPLYING_RETURN->value]
+        );
+        $response->assertStatus(204);
+        $this->assertDatabaseHas(
+            BookManagement::class,
+            [
+                'user_id' => $this->bookManagement->user_id,
+                'book_id' => $this->bookManagement->book_id,
+                'status' => BookManagementStatusType::IN_RENTAL->value
             ]
         );
     }

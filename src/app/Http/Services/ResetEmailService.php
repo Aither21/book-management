@@ -40,8 +40,9 @@ class ResetEmailService
    */
   public function updateEmail(User $user, string $email): void
   {
-    $user->email = $email;
-    $user->email_verified_at = null;
-    $user->save();
+    $user->fill([
+      'email' => $email,
+      'email_verified_at' => null
+    ])->save();
   }
 }
