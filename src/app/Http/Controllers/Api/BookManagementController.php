@@ -64,10 +64,23 @@ class BookManagementController extends Controller
             $this->bookManagementService->generateBookManagement($user->id, $bookId);
             return response()->noContent();
         } elseif (!is_null($bookManagementPutRequest->status)) {
-            // 図書レンタル返却申請
+
+            switch ($bookManagementPutRequest->status) {
+                case BookManagementStatusType::APPLYING_RENTAL->value:
+                    $updateStatus = BookManagementStatusType::RENTAL_REJECTION;
+                    break;
+                case BookManagementStatusType::IN_RENTAL->value:
+                    $updateStatus = BookManagementStatusType::APPLYING_RETURN;
+                    break;
+                case BookManagementStatusType::APPLYING_RETURN->value:
+                    $updateStatus = BookManagementStatusType::IN_RENTAL;
+                    break;
+                default:
+            }
+            // 図書レンタルステータス更新
             $this->bookManagementService->updateBookManagementStatus(
                 $bookManagement,
-                BookManagementStatusType::APPLYING_RETURN
+                $updateStatus
             );
             return response()->noContent();
         }
