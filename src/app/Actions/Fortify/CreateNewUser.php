@@ -37,11 +37,12 @@ class CreateNewUser implements CreatesNewUsers
         }
 
         $user = new User();
-        $user->name = $input['name'];
-        $user->email = $input['email'];
-        $user->company = $input['company'];
-        $user->password = Hash::make($input['password']);
-        $user->save();
+        $user->fill([
+            'name' => $input['name'],
+            'email' => $input['email'],
+            'company' => $input['company'],
+            'password' => Hash::make($input['password'])
+        ])->save();
         return $user;
     }
 }

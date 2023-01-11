@@ -30,9 +30,10 @@ class UserService
   {
     $updatedUser = User::findOrFail($userId);
 
-    $updatedUser->name = $user->name;
-    $updatedUser->email = $user->email;
-    $updatedUser->company = $user->company;
-    $updatedUser->save();
+    $updatedUser->fill([
+      'name' => $user->name,
+      'email' => $user->email,
+      'company' => $user->company
+    ])->save();
   }
 }

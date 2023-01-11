@@ -35,8 +35,7 @@ class BookManagementService
     BookManagement $bookManagement,
     BookManagementStatusType $status
   ): void {
-    $bookManagement->status = $status->value;
-    $bookManagement->save();
+    $bookManagement->fill(['status' => $status->value])->save();
   }
 
   /**
@@ -78,7 +77,7 @@ class BookManagementService
     ])->when($status, function ($query) use ($status) {
       return $query->whereStatus($status);
     })
-    ->orderBy('id', SortType::from($sort)->name)
-    ->paginate(10);
+      ->orderBy('id', SortType::from($sort)->name)
+      ->paginate(10);
   }
 }
